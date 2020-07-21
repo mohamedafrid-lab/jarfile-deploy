@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordpress
+  labels:
+    app: tomcat
+
+spec:
+  ports:
+    - port: 8080
+  selector:
+    app: tomcat
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tomcat-pv-cliam
+  labels:
+    app: tomcat
+
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcat-webapp
+  labels:
+    app: tomcat
+
+spec:
+  selector:
+    matchLabels:
+      app: tomcat
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: tomcat
+    spec:
+      containers:
+        - image: mohamedafrid/tomcat-deploy
+          name: tomcat-webapp
+          ports:
+            - containerPort: 8080
+              name: tomcat
+          volumeMounts:
+            - name: wp-persistent-storage
+              mountPath: /var/www/html
+      volumes:
+        - name: wp-persistent-storage
+          persistentVolumeClaim:
+            claimName: tomcat-pv-cliam
+          
+    
