@@ -1,5 +1,3 @@
 FROM tomcat:latest
-
-COPY target/demo.war /var/www/html/
-
+COPY /var/lib/jenkins/workspace/Git-pull/target/*.war /usr/local/tomcat/bin/
 EXPOSE 8080
