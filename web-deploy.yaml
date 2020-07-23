@@ -41,7 +41,7 @@ spec:
     matchLabels:
       app: tomcat
   strategy:
-    type: RollingUpdate
+    type: Recreate
   template:
     metadata:
       labels:
