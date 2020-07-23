@@ -23,7 +23,7 @@ metadata:
 
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 5Gi
@@ -41,7 +41,7 @@ spec:
     matchLabels:
       app: tomcat
   strategy:
-    type: Recreate
+    type: RollingUpdate
   template:
     metadata:
       labels:
