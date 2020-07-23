@@ -6,6 +6,7 @@ metadata:
     app: tomcat
 
 spec:
+  ports:
   - name: tomcat
     port: 8080
     targetPort: 8080
