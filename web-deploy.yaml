@@ -13,20 +13,7 @@ spec:
   selector:
     app: tomcat
   type: NodePort
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: tomcat-pv-cliam
-  labels:
-    app: tomcat
 
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 5Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -53,12 +40,6 @@ spec:
           ports:
             - containerPort: 8080
               name: tomcat
-          volumeMounts:
-            - name: wp-persistent-storage
-              mountPath: /var/www/html
-      volumes:
-        - name: wp-persistent-storage
-          persistentVolumeClaim:
-            claimName: tomcat-pv-cliam
+
           
     
